@@ -40,5 +40,4 @@ public class KafkaDataReceiverImpl implements KafkaDataReceiver {
                         r.receiverOffset().acknowledge();
                     });
         }
-    }
 }
