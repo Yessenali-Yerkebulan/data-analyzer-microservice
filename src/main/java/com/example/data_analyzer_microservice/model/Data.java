@@ -25,6 +25,7 @@ import jakarta.persistence.Table;
 public class Data {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
     private Long sensorId;
     private LocalDateTime timestamp;
