@@ -2,26 +2,38 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout
         uses: actions/checkout@v3
+
+      # Step 2: Login to Docker Hub
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Step 3: Set up Docker Buildx (for multi-platform builds)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+
+      # Optional Step: Debugging - Check GITHUB_RUN_NUMBER
+      - name: Check GITHUB_RUN_NUMBER
+        run: echo "Run number: ${{ github.run_number }}"
+
+      # Step 4: Build and Push Docker image
       - name: Build and Push to Docker Hub
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/data-analyzer-microservice
-          tags: 0.0.$GITHUB_RUN_NUMBER, latest
+          tags: 0.0.${{ github.run_number }}, latest
           dockerfile: Dockerfile
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
