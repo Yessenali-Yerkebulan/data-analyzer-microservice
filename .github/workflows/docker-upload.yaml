@@ -26,7 +26,7 @@ jobs:
 
       # Optional Step: Debugging - Check GITHUB_RUN_NUMBER
       - name: Check GITHUB_RUN_NUMBER
-        run: echo "Run number: ${{ github.run_number }}"
+        run: echo "Run number ${{ github.run_number }}"
 
       # Step 4: Build and Push Docker image
       - name: Build and Push to Docker Hub
